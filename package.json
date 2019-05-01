@@ -1,5 +1,5 @@
 {
-  "name": "ts-crypto-binary",
+  "name": "crypto-binary",
   "version": "0.1.1",
   "description": "Assemble and disassemble binary messages used in cryptocoin applications",
   "keywords": [
