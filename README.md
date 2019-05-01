@@ -7,7 +7,15 @@ MessageBuilder
 Assemble a binary message out of chunks of data. All the methods return the builder itself, so are chainable. General usage is to use the various `put*` methods and then call `raw()` to get the output as a Buffer.
 
 ```js
-var b = new MessageBuilder();
+let b = new MessageBuilder();
+b.putInt8(255).putInt16(0xbeef);
+b.put(new Buffer([1,2,3,4,5]));
+console.log(b.raw().toString('hex')); // 'ffbeef0102030405'
+```
+
+```ts
+import { MessageBuilder } from 'crypto-binary';
+const b: MessageBuilder = new MessageBuilder();
 b.putInt8(255).putInt16(0xbeef);
 b.put(new Buffer([1,2,3,4,5]));
 console.log(b.raw().toString('hex')); // 'ffbeef0102030405'
@@ -25,9 +33,21 @@ MessageParser
 Given a string of binary data saved in a buffer, walk through it looking for structured data. Each of the methods returns the specified data from the current point in the data, and increments the pointer to the end of the data extracted. The point of this class is to allow you to not have to constantly check "is there enough data in the buffer to complete my next action?" or "did the last action fail?" and defer those checks to the end of parsing, making for cleaner code.
 
 ```js
-var p = new MessageParser(rawData);
-var itemNum = p.readVarInt();
-for (var i = 0; i < itemNum; i++) {
+let p = new MessageParser(rawData);
+let itemNum = p.readVarInt();
+for (let i = 0; i < itemNum; i++) {
+  items.push(s.readUInt32LE());
+}
+if (p.hasFailed) {
+  throw new Error('Ran out of data before this point!');
+}
+```
+
+```ts
+import { MessageParser } from 'crypto-binary';
+const p: MessageParser = new MessageParser(rawData);
+const itemNum = p.readVarInt();
+for (let i = 0; i < itemNum; i++) {
   items.push(s.readUInt32LE());
 }
 if (p.hasFailed) {

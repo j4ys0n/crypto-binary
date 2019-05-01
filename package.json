@@ -1,18 +1,32 @@
 {
-  "name": "crypto-binary",
+  "name": "ts-crypto-binary",
   "version": "0.1.1",
   "description": "Assemble and disassemble binary messages used in cryptocoin applications",
   "keywords": [
     "bitcoin",
     "cryptography"
   ],
-  "main": "./lib/Message.js",
-  "devDependencies": {
-    "mocha": "1.*"
+  "main": "dist/Message.js",
+  "typings": "dist/Messages.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -c tslint.json",
+    "lintfix": "tslint -c tslint.json --fix",
+    "test": "NODE_ENV=test mocha test/**/*.js"
   },
   "repository": {
-    "url": "https://github.com/cryptocoinjs/crypto-binary",
+    "url": "https://github.com/j4ys0n/crypto-binary",
     "type": "git"
   },
-  "author": "Brooks Boyd <boydb@midnightdesign.ws>"
+  "license": "ISC",
+  "author": "Brooks Boyd <boydb@midnightdesign.ws>",
+  "contributors": [
+    "Jayson Jacobs (https://github.com/j4ys0n)"
+  ],
+  "devDependencies": {
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3333",
+    "@types/node": "^11.13.8",
+    "mocha": "1.*"
+  }
 }

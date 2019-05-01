@@ -1,4 +1,4 @@
-var Builder = require('../lib/Message').MessageBuilder;
+var Builder = require('../dist/Message').MessageBuilder;
 var assert = require("assert")
 
 describe('Builder', function() {
@@ -11,7 +11,7 @@ describe('Builder', function() {
     assert.equal(b.raw().toString('hex'), '010203');
   });
   it('should properly build raw Buffers', function() {
-    b.put(new Buffer([1])).put(new Buffer([2])).put(new Buffer([3]));
+    b.put(Buffer.from([1])).put(Buffer.from([2])).put(Buffer.from([3]));
     assert.equal(b.raw().toString('hex'), '010203');
   });
   it('should properly pad raw bytes', function() {
@@ -35,7 +35,7 @@ describe('Builder', function() {
     assert.equal(b.raw().toString('utf8'), 'Hello');
   });
   it('should properly add varInts', function() {
-    b.putVarInt(0x50).putVarInt(0x1234).putVarInt(0xdeadbeef).putVarInt(new Buffer([1,2,3,4,5,6,7,8]));
+    b.putVarInt(0x50).putVarInt(0x1234).putVarInt(0xdeadbeef).putVarInt(Buffer.from([1,2,3,4,5,6,7,8]));
     assert.equal(b.raw().toString('hex'), '50fd3412feefbeaddeff0102030405060708');
   });
   it('should properly add varStrings', function() {
@@ -46,7 +46,7 @@ describe('Builder', function() {
     var i
     for (i=0; i<10000; i++) b.put(1)
     assert.equal(b.cursor, 10000)
-    for (i=0; i<5000; i++) b.put(new Buffer([2, 3]))
+    for (i=0; i<5000; i++) b.put(Buffer.from([2, 3]))
     assert.equal(b.cursor, 20000)
     b.putInt8(255)
     assert.equal(b.cursor, 20001)
