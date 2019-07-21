@@ -1,3 +1,4 @@
+/// <reference types="node" />
 export declare class MessageBuilder {
     maxBytes: number;
     buffer: Buffer;
@@ -30,5 +31,5 @@ export declare class MessageParser {
     readUInt32LE(): any;
     readVarInt(): any;
     readVarString(): string | boolean;
-    raw(length: number): any;
+    raw(length: number, increment?: boolean): any;
 }

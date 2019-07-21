@@ -215,7 +215,7 @@ export class MessageParser {
     return str.join('');
   }
 
-  raw(length: number): any {
+  raw(length: number, increment: boolean = true): any {
     if (this.hasFailed || this.pointerCheck(length) === false) return false;
     if (typeof length !== 'number') {
       this.markFailed();
@@ -223,7 +223,9 @@ export class MessageParser {
     }
     var out = Buffer.alloc(length);
     this.buffer.copy(out, 0, this.pointer, this.pointer+length);
-    this.incrPointer(length);
+    if (increment) {
+      this.incrPointer(length);
+    }
     return out;
   }
 

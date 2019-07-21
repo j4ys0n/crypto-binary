@@ -201,7 +201,8 @@ var MessageParser = /** @class */ (function () {
         }
         return str.join('');
     };
-    MessageParser.prototype.raw = function (length) {
+    MessageParser.prototype.raw = function (length, increment) {
+        if (increment === void 0) { increment = true; }
         if (this.hasFailed || this.pointerCheck(length) === false)
             return false;
         if (typeof length !== 'number') {
@@ -210,7 +211,9 @@ var MessageParser = /** @class */ (function () {
         }
         var out = Buffer.alloc(length);
         this.buffer.copy(out, 0, this.pointer, this.pointer + length);
-        this.incrPointer(length);
+        if (increment) {
+            this.incrPointer(length);
+        }
         return out;
     };
     return MessageParser;
