@@ -178,6 +178,13 @@ var MessageParser = /** @class */ (function () {
         this.incrPointer(4);
         return out;
     };
+    MessageParser.prototype.readUInt64LE = function () {
+        if (this.hasFailed || this.pointerCheck(8) === false)
+            return false;
+        var out = parseInt(this.raw(8).reverse().toString('hex'), 16);
+        this.incrPointer(4);
+        return out;
+    };
     MessageParser.prototype.readVarInt = function () {
         if (this.hasFailed || this.pointerCheck() === false)
             return false;
@@ -192,7 +199,36 @@ var MessageParser = /** @class */ (function () {
             return this.readUInt32LE();
         }
         else {
-            return this.raw(8);
+            return this.readUInt64LE();
+        }
+    };
+    MessageParser.prototype.readVarIntAndBytes = function () {
+        if (this.hasFailed || this.pointerCheck() === false)
+            return false;
+        var flag = this.readInt8();
+        if (flag < 0xfd) {
+            return {
+                data: flag,
+                bytes: 1
+            };
+        }
+        else if (flag == 0xfd) {
+            return {
+                data: this.readUInt16LE(),
+                bytes: 2
+            };
+        }
+        else if (flag == 0xfe) {
+            return {
+                data: this.readUInt32LE(),
+                bytes: 4
+            };
+        }
+        else {
+            return {
+                data: this.readUInt64LE(),
+                bytes: 8
+            };
         }
     };
     MessageParser.prototype.readVarString = function () {
