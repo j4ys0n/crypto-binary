@@ -182,7 +182,6 @@ var MessageParser = /** @class */ (function () {
         if (this.hasFailed || this.pointerCheck(8) === false)
             return false;
         var out = parseInt(this.raw(8).reverse().toString('hex'), 16);
-        this.incrPointer(8);
         return out;
     };
     MessageParser.prototype.readVarInt = function () {

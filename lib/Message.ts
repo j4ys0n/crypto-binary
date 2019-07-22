@@ -198,8 +198,7 @@ export class MessageParser {
 
   readUInt64LE(): any {
     if (this.hasFailed || this.pointerCheck(8) === false) return false;
-    var out = parseInt(this.raw(8).reverse().toString('hex'),16)
-    this.incrPointer(8);
+    var out = parseInt(this.raw(8).reverse().toString('hex'),16);
     return out
   }
 
