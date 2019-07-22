@@ -219,7 +219,7 @@ export class MessageParser {
 
   readVarIntAndBytes(): any {
     if (this.hasFailed || this.pointerCheck() === false) return {
-      data: false,
+      data: 0,
       bytes: 0
     };
     var flag = this.readInt8();
