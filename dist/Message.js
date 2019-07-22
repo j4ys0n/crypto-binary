@@ -132,6 +132,10 @@ var MessageParser = /** @class */ (function () {
         }
         return true;
     };
+    MessageParser.prototype.pointerPosition = function () {
+        var pos = this.pointer;
+        return pos;
+    };
     MessageParser.prototype.incrPointer = function (amount) {
         if (this.hasFailed)
             return false;
@@ -214,6 +218,16 @@ var MessageParser = /** @class */ (function () {
         if (increment) {
             this.incrPointer(length);
         }
+        return out;
+    };
+    MessageParser.prototype.rawSegment = function (start, end) {
+        var length = end - start;
+        if (length > this.buffer.length) {
+            this.markFailed();
+            return false;
+        }
+        var out = Buffer.alloc(length);
+        this.buffer.copy(out, 0, start, end);
         return out;
     };
     return MessageParser;

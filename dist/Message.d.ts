@@ -24,6 +24,7 @@ export declare class MessageParser {
     constructor(raw: Buffer);
     markFailed(): boolean;
     pointerCheck(num?: number): boolean;
+    pointerPosition(): number;
     incrPointer(amount: number): boolean;
     setPointer(amount: number): any;
     readInt8(): any;
@@ -32,4 +33,5 @@ export declare class MessageParser {
     readVarInt(): any;
     readVarString(): string | boolean;
     raw(length: number, increment?: boolean): any;
+    rawSegment(start: number, end: number): any;
 }

@@ -149,6 +149,11 @@ export class MessageParser {
     return true;
   }
 
+  pointerPosition(): number {
+    const pos = this.pointer;
+    return pos;
+  }
+
   incrPointer(amount: number): boolean {
     if (this.hasFailed) return false;
     if (typeof amount !== 'number') {
@@ -226,6 +231,17 @@ export class MessageParser {
     if (increment) {
       this.incrPointer(length);
     }
+    return out;
+  }
+
+  rawSegment(start: number, end: number): any {
+    const length = end - start;
+    if (length > this.buffer.length) {
+      this.markFailed();
+      return false;
+    }
+    let out = Buffer.alloc(length);
+    this.buffer.copy(out, 0, start, end);
     return out;
   }
 
