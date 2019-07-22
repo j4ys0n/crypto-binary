@@ -216,35 +216,6 @@ export class MessageParser {
     }
   }
 
-  readVarIntAndBytes(): any {
-    if (this.hasFailed || this.pointerCheck() === false) return {
-      data: 0,
-      bytes: 0
-    };
-    var flag = this.readInt8();
-    if (flag < 0xfd) {
-      return {
-        data: flag,
-        bytes: 1
-      };
-    } else if (flag == 0xfd) {
-      return {
-        data: this.readUInt16LE(),
-        bytes: 2
-      };
-    } else if (flag == 0xfe) {
-      return {
-        data: this.readUInt32LE(),
-        bytes: 4
-      };
-    } else {
-      return {
-        data: this.readUInt64LE(),
-        bytes: 8
-      };
-    }
-  }
-
   readVarString(): string | boolean {
     if (this.hasFailed || this.pointerCheck() === false) return false;
     var length = this.readVarInt();

@@ -32,7 +32,6 @@ export declare class MessageParser {
     readUInt32LE(): any;
     readUInt64LE(): any;
     readVarInt(): any;
-    readVarIntAndBytes(): any;
     readVarString(): string | boolean;
     raw(length: number, increment?: boolean): any;
     rawSegment(start: number, end: number): any;
