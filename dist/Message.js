@@ -204,7 +204,10 @@ var MessageParser = /** @class */ (function () {
     };
     MessageParser.prototype.readVarIntAndBytes = function () {
         if (this.hasFailed || this.pointerCheck() === false)
-            return false;
+            return {
+                data: false,
+                bytes: 0
+            };
         var flag = this.readInt8();
         if (flag < 0xfd) {
             return {
